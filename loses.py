@@ -17,4 +17,10 @@ def derivative_bce(y_true, y_pred):
     y_pred = np.clip(y_pred, epsilon, 1 - epsilon)
     return (-(y_true / y_pred) + (1 - y_true) / (1 - y_pred)) / y_true.size
 
-    
+def mae(y_true, y_pred):
+    return np.mean(np.abs(y_true - y_pred))
+
+def mae_derivative(y_true, y_pred):
+    return np.sign(y_pred - y_true) / y_true.size
+
+

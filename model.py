@@ -22,9 +22,11 @@ class Model:
 
     def train(self, X, y, epochs, learning_rate, loss_fn, loss_derivative):
         for epoch in range(epochs):
-            output = self.forward(X)                              # 1. Forward
-            loss = loss_fn(y, output)                             # 2. Loss hesapla
-            loss_grad = loss_derivative(y, output)                # 3. Loss türevi
-            self.backward(loss_grad, learning_rate)              # 4. Backward güncelle
+            output = self.forward(X)                           
+            loss = loss_fn(y, output)                             
+            loss_grad = loss_derivative(y, output)               
+            self.backward(loss_grad, learning_rate)              
 
             print(f"Epoch {epoch+1}/{epochs}, Loss: {loss:.6f}")
+
+
