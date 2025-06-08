@@ -1,18 +1,17 @@
-import utils
 import numpy as np  
-from activations import ReLU, Sigmoid, Tanh, Softmax
+from activations import ReLU, Sigmoid
 from dense import Dense 
-from loses import mse, derrivative_mse, bce, derivative_bce, mae, mae_derivative
+from loses import bce, derivative_bce
 from model import Model
-
+import utils  
 
 X = np.array([
-    [160, 50, 22],  # kadın
-    [170, 60, 25],  # kadın
-    [180, 75, 30],  # erkek
-    [175, 85, 28],  # erkek
-    [165, 55, 20],  # kadın
-    [185, 90, 35],  # erkek
+    [160, 50, 22],  # woman
+    [170, 60, 25],  # woman
+    [180, 75, 30],  # man
+    [175, 85, 28],  # man
+    [165, 55, 20],  # woman
+    [185, 90, 35],  # man
 ])
 
 y = np.array([
@@ -26,12 +25,11 @@ y = np.array([
 
 X = (X - np.min(X, axis=0)) / (np.max(X, axis=0) - np.min(X, axis=0))
 
-
 model = Model()
-model.add(Dense(3, 5))       # 3 giriş → 5 gizli nöron
-model.add(ReLU())
-model.add(Dense(5, 1))       # 5 → 1 çıkış
-model.add(Sigmoid())         # Çünkü çıktı: 0 ya da 1
+model.add(Dense(3, 5))     
+model.add(ReLU())         
+model.add(Dense(5, 1))    
+model.add(Sigmoid())        
 
 model.train(
     X, y,
@@ -41,11 +39,13 @@ model.train(
     loss_derivative=derivative_bce
 )
 
-
 preds = model.predict(X)
 
-print("\nTahminler:")
 for i in range(len(X)):
-    gender = "erkek" if preds[i][0] >= 0.5 else "kadın"
-    print(f"Girdi: {X[i]}, Tahmin: {preds[i][0]:.3f} → {gender} (Gerçek: {y[i][0]})")
-print("\nSon Ağırlıklar:")
+    gender = "man" if preds[i][0] >= 0.5 else "woman"
+
+
+
+
+utils.save_model(model, "gender_model.npz")
+
